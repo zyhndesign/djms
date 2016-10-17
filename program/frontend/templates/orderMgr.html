@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <link href="static/css/lib/jquery.toastmessage.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/orderMgr.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">订单管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="productorders/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建订单
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <input type="text" id="name" class="form-control" placeholder="订单号">
+                        <span class="input-group-btn">
+                            <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                        </span>
+                </div>
+
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>订单号</th>
+                        <th>下单时间</th>
+                        <th>来源</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td><span class="detailController glyphicon glyphicon-plus"></span></td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">取消订单</a>&nbsp;<a href="#" class="addProOut">添加出货</a>
+                    </tr>
+                    <tr>
+                        <td><span class="detailController glyphicon glyphicon-minus"></span></td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">取消订单</a>&nbsp;<a href="#" class="addProOut">添加出货</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+<!--设置订单状态-->
+<div class="modal fade" id="setOrderStatusModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加/修改出货记录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="setOrderStatusForm" action="productorders/:id/set-status" method="post">
+                    <div class="form-group">
+                        <label for="status" class="control-label col-md-2">产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="status" class="form-control" id="status">
+                                <option value="1">完成</option>
+                                <option value="-1">废弃</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--添加/修改产品记录-->
+<div class="modal fade" id="addProModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加/修改出货记录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="myAddProForm" action="productorders/:id/add" method="post">
+                    <div class="form-group">
+                        <label for="product_id" class="control-label col-md-2">产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="product_id" class="form-control" id="product_id">
+                                {% for product in products  %}
+                                <option value="{{product.id}}">{{product.name}}</option>
+
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" class="control-label col-md-2">数量*</label>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" min="1"
+                                   name="quantity" id="quantity">
+                        </div>
+                        <label for="unit_price" class="control-label col-md-2">单价*</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="unit_price"
+                                   id="unit_price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="control-label col-md-2">金额*</label>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" readonly
+                                   name="amount" id="amount">
+                        </div>
+                        <label for="date_delivered" class="control-label col-md-2">交货时间*</label>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="date_delivered"
+                                   id="date_delivered">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="memo" class="control-label col-md-2">活动说明</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="memo" name="memo" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--添加/修改出货记录-->
+<div class="modal fade" id="proOutModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加/修改出货记录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="myProOutForm" action="productorders/:id/handle" method="post">
+                    <div class="form-group">
+                        <label for="serial_no" class="control-label col-md-2">编号*</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="serial_no" name="serial_no" rows="3"></textarea>
+                            <span class="help-block">多个编号之间逗号隔开</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_outstock" class="control-label col-md-2">日期*</label>
+                        <div class="col-md-8">
+                            <input type="date" class="form-control"
+                                   name="date_outstock" id="date_outstock">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="finished" class="control-label col-md-2">订单是否完成*</label>
+                        <div class="col-md-8">
+                            <select name="finished" class="form-control" id="finished">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% include 'loading.html' %}
+
+</body>
+</html>

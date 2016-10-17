@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/proMgr.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    {% include 'proSubMenu.html' %}
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">产品管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="products/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建产品
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <input type="text" id="name" class="form-control" placeholder="名称">
+                    <span class="input-group-btn">
+                        <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                    </span>
+                </div>
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th>产品图</th>
+                        <th>名称</th>
+                        <th>原料成分</th>
+                        <th>产品工时（小时）</th>
+                        <th>所属类别</th>
+                        <th>编号</th>
+                        <th>定价</th>
+                        <th>竹扣类型</th>
+                        <th>附件</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">修改</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+var proUpdate=(function(config,Functions){
+
+    return {
+        submitForm:function(form){
+            Functions.showLoading();
+            $(form).ajaxSubmit({
+                dataType:"json",
+                headers:{
+                    "X-Requested-With":"XMLHttpRequest"
+                },
+                success:function(response){
+                    if(response.data.success){
+                        $().toastmessage("showSuccessToast",config.message.optSuccRedirect);
+                        Functions.timeoutRedirect("products");
+                    }else{
+                        Functions.ajaxReturnErrorHandler(response.data.error_code);
+                    }
+                },
+                error:function(){
+                    Functions.ajaxErrorHandler();
+                }
+            });
+        }
+    }
+})(config,Functions);
+
+$(document).ready(function(){
+
+    var thumbUploader=Functions.createUploader({
+        size:config.upload.sizes.img,
+        filter:config.upload.filters.img,
+        btn:"thumbUploadBtn",
+        url:config.upload.url,
+        multipartParams:null,
+        container:"thumbUploadContainer",
+        fileAddCallback:null,
+        progressCallback:null,
+        uploadedCallback:function(file,info){
+            if(info.data.success){
+                $("#thumb").attr("src",info.data.file_url);
+                $("#drawing").val(info.data.file_url);
+            }else{
+                Functions.ajaxErrorHandler();
+            }
+        }
+    });
+
+    var attachmentUploader=Functions.createUploader({
+        size:config.upload.sizes.attachment,
+        filter:config.upload.filters.attachment,
+        btn:"attachmentUploadBtn",
+        url:config.upload.url,
+        multipartParams:null,
+        container:"attachmentUploadContainer",
+        fileAddCallback:null,
+        progressCallback:function(file){
+            $("#attachmentName").text(file.name+"----"+file.percent+"%");
+        },
+        uploadedCallback:function(file,info){
+            if(info.data.success){
+                $("#attachmentName").text(file.name);
+                $("#attachment").val(info.data.file_url);
+            }else{
+                Functions.ajaxErrorHandler();
+            }
+        }
+    });
+
+    $("#myForm").validate({
+        ignore: [],
+        rules:{
+            name:{
+                required:true,
+                maxlength:32
+            },
+            drawing:{
+                required:true
+            },
+            man_hours:{
+                required:true
+            },
+            _materials:{
+                required:true
+            },
+            serial_number:{
+                required:true,
+                rangelength:[5,5]
+            },
+            price:{
+                required:true
+            }
+        },
+        messages:{
+            name:{
+                required:config.validError.required,
+                maxlength:config.validError.maxLength.replace("${max}",32)
+            },
+            drawing:{
+                required:config.validError.required
+            },
+            man_hours:{
+                required:config.validError.required
+            },
+            _materials:{
+                required:config.validError.required
+            },
+            serial_number:{
+                required:config.validError.required,
+                rangelength:config.validError.rangLength.replace("${min}",5).replace("${max}",5)
+            },
+            price:{
+                required:config.validError.required
+            }
+        },
+        submitHandler:function(form) {
+            proUpdate.submitForm(form);
+        }
+    });
+});

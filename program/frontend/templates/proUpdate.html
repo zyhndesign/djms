@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link type="text/css" rel="stylesheet" href="static/css/lib/jquery.toastmessage.css">
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/plupload.full.min.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/proUpdate.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    {% include 'proSubMenu.html' %}
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">新建/修改产品信息</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <form class="form-horizontal" id="myForm" action="products/create_or_update" method="post">
+                    {% if product.id %}
+                    <input type="hidden" name="id" value="{{product.id}}">
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="name" class="control-label col-md-2">名称*</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" value="{{product.name}}" name="name" id="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="drawing" class="control-label col-md-2">产品图*</label>
+                        <div class="col-md-8" id="thumbUploadContainer">
+                            <input type="button" value="上传文件" class="btn btn-success" id="thumbUploadBtn">
+                            <img id="thumb" src="{{product.drawing}}" width="100px" height="100px">
+                            <input type="hidden" name="drawing" id="drawing" value="{{product.drawing}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="attachment" class="control-label col-md-2">附件</label>
+                        <div class="col-md-8" id="attachmentUploadContainer">
+                            <input type="button" value="上传文件" class="btn btn-success" id="attachmentUploadBtn">
+                            <span class="text-primary" id="attachmentName" style="margin-left: 50px">{{filename(product.attachment)}}</span>
+                            <input type="hidden" name="attachment" id="attachment" value="{{product.attachment}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="man_hours" class="control-label col-md-2">产品工时(小时)*</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" value="{{product.man_hours}}" name="man_hours"
+                                   id="man_hours">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="_materials" class="control-label col-md-2">原料成分*</label>
+                        <div class="col-md-8">
+                            <select name="_materials" class="form-control" id="_materials" multiple="multiple">
+                                {% for material in materials  %}
+                                    {% if material.id in product.materials_id  %}
+                                    <option selected value="{{material.id}}">{{material.name}}</option>
+                                    {% else %}
+                                    <option value="{{material.id}}">{{material.name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="control-label col-md-2">所属类别*</label>
+                        <div class="col-md-8">
+                            <select name="category" class="form-control" id="category">
+                                {% for cat in categories  %}
+                                    {% if cat.id == product.category  %}
+                                    <option selected value="{{cat.id}}">{{cat.name}}</option>
+                                    {% else %}
+                                    <option value="{{cat.id}}">{{cat.name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="serial_number" class="control-label col-md-2">编号*</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" value="{{product.serial_number}}" name="serial_number"
+                                   id="serial_number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="control-label col-md-2">单价（元）*</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" value="{{product.price}}" name="price"
+                                   id="price">
+                        </div>
+                        <label for="reed" class="control-label col-md-2">竹筘类型*</label>
+                        <div class="col-md-3">
+                            <select name="reed" class="form-control" id="reed">
+                                {% for reed in [6,7,8,9,10,11,12,13,14]  %}
+                                {% if reed == product.reed  %}
+                                <option selected value="{{reed}}">{{reed}}</option>
+                                {% else %}
+                                <option value="{{reed}}">{{reed}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="memo" class="control-label col-md-2">备注</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="memo" name="memo" rows="3">{{product.memo}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

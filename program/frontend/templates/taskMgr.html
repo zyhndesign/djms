@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <link href="static/css/lib/jquery.toastmessage.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/taskMgr.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">任务管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="tasks/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建任务
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <input type="text" id="name" class="form-control" placeholder="产品名称/织娘姓名">
+                        <span class="input-group-btn">
+                            <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                        </span>
+                </div>
+
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>织娘</th>
+                        <th>生产产品名称</th>
+                        <th>开始日期</th>
+                        <th>产出数量</th>
+                        <th>交货时间</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td><span class="detailController glyphicon glyphicon-plus"></span></td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">修改</a>&nbsp;<a href="#" class="matOut">分发原材料</a>&nbsp;
+                            <a href="#" class="editProIn">收货</a></td>
+                    </tr>
+                    <tr>
+                        <td><span class="detailController glyphicon glyphicon-minus"></span></td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">修改</a>&nbsp;<a href="#" class="matOut">分发原材料</a>&nbsp;
+                            <a href="#" class="editProIn">修改收货</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+<!--添加原材料分发记录-->
+<div class="modal fade" id="matOutModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">原材料分发</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="matOutForm" action="tasks/:id/material/add" method="post">
+
+                    <div class="form-group">
+                        <label for="material" class="control-label col-md-2">原材料*</label>
+                        <div class="col-md-8">
+                            <select name="material" class="form-control" id="material">
+                                {% for material in materials  %}
+                                <option value="{{material.id}}">{{material.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="control-label col-md-2">消费量*</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control"
+                                   name="amount" id="amount">
+                        </div>
+                        <label for="unit" class="control-label col-md-2">单位*</label>
+                        <div class="col-md-3">
+                            <select name="unit" class="form-control" id="unit">
+                                <option value="kg">千克</option>
+                                <option value="g">克</option>
+                                <option value="t">吨</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recycle" class="control-label col-md-2">类型*</label>
+                        <div class="col-md-8">
+                            <select name="recycle" class="form-control" id="recycle">
+                                <option value="-1">分发</option>
+                                <option value="1">回收</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--收货记录-->
+<div class="modal fade" id="proInModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">收获记录</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="proInForm" action="tasks/:id/result/add" method="post">
+
+
+                    <div class="form-group">
+                        <label for="date_finished" class="control-label col-md-2">交货时间*</label>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control"
+                                   name="date_finished" id="date_finished">
+                        </div>
+                        <label for="quantity_qualified" class="control-label col-md-2">合格数量*</label>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" min="1"
+                                   name="quantity_qualified" id="quantity_qualified">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity_defective" class="control-label col-md-2">次品数量*</label>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" min="1"
+                                    name="quantity_defective" id="quantity_defective">
+                        </div>
+                        <label for="level" class="control-label col-md-2">质量评级*</label>
+                        <div class="col-md-3">
+                            <select name="level" class="form-control" id="level">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% include 'loading.html' %}
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+var zWorkerUpdate=(function(config,Functions){
+
+    return {
+        submitForm:function(form){
+            Functions.showLoading();
+            $(form).ajaxSubmit({
+                dataType:"json",
+                headers:{
+                    "X-Requested-With":"XMLHttpRequest"
+                },
+                success:function(response){
+                    if(response.data.success){
+                        $().toastmessage("showSuccessToast",config.message.optSuccRedirect);
+                        Functions.timeoutRedirect("workers");
+                    }else{
+                        Functions.ajaxReturnErrorHandler(response.data.error_code);
+                    }
+                },
+                error:function(){
+                    Functions.ajaxErrorHandler();
+                }
+            });
+        }
+    }
+})(config,Functions);
+
+$(document).ready(function(){
+    $("#is_manager").change(function(){
+        if($(this).val()==1){
+            $("#manager").attr("disabled","disabled");
+        }else{
+            $("#manager").removeAttr("disabled");
+        }
+    });
+    $("#is_manager").trigger("change");
+
+    $("#myForm").validate({
+        rules:{
+            name:{
+                required:true,
+                maxlength:32
+            },
+            idcard:{
+                required:true
+            },
+            address:{
+                required:true
+            },
+            tel:{
+                required:true
+            }
+        },
+        messages:{
+            name:{
+                required:config.validError.required,
+                maxlength:config.validError.maxLength.replace("${max}",32)
+            },
+            idcard:{
+                required:config.validError.required
+            },
+            address:{
+                required:config.validError.required
+            },
+            tel:{
+                required:config.validError.required
+            }
+        },
+        submitHandler:function(form) {
+            zWorkerUpdate.submitForm(form);
+        }
+    });
+});

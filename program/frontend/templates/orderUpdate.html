@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link type="text/css" rel="stylesheet" href="static/css/lib/jquery.toastmessage.css">
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/orderUpdate.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">新建/修改订单</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <form class="form-horizontal" id="myForm" action="productorders/create" method="post">
+                    <div class="form-group">
+                        <label for="date_submitted" class="control-label col-md-2">下单时间*</label>
+                        <div class="col-md-8">
+                            <input type="date" class="form-control" name="date_submitted"
+                                   id="date_submitted">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="source" class="control-label col-md-2">订单来源*</label>
+                        <div class="col-md-3">
+                            <select name="source" class="form-control" id="source">
+                                <option value="淘宝">淘宝</option>
+                                <option value="微信">微信</option>
+                                <option value="线下">线下</option>
+                            </select>
+                        </div>
+                        <label for="order_no" class="control-label col-md-2">订单号*</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="order_no"
+                                   id="order_no">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memo" class="control-label col-md-2">备注</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="memo" name="memo" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

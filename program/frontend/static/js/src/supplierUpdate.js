@@ -1,0 +1,70 @@
+var supplierUpdate=(function(config,Functions){
+
+    return {
+        submitForm:function(form){
+            Functions.showLoading();
+            $(form).ajaxSubmit({
+                dataType:"json",
+                headers:{
+                    "X-Requested-With":"XMLHttpRequest"
+                },
+                success:function(response){
+                    if(response.data.success){
+                        $().toastmessage("showSuccessToast",config.message.optSuccRedirect);
+                        Functions.timeoutRedirect("sp");
+                    }else{
+                        Functions.ajaxReturnErrorHandler(response.data.error_code);
+                    }
+                },
+                error:function(){
+                    Functions.ajaxErrorHandler();
+                }
+            });
+        }
+    }
+})(config,Functions);
+
+$(document).ready(function(){
+
+    $("#myForm").validate({
+        rules:{
+            name:{
+                required:true,
+                maxlength:32
+            },
+            contact_name:{
+                required:true
+            },
+            contact_tel:{
+                required:true
+            },
+            contact_address:{
+                required:true
+            },
+            shop_address:{
+                required:true
+            }
+        },
+        messages:{
+            name:{
+                required:config.validError.required,
+                maxlength:config.validError.maxLength.replace("${max}",32)
+            },
+            contact_name:{
+                required:config.validError.required
+            },
+            contact_tel:{
+                required:config.validError.required
+            },
+            contact_address:{
+                required:config.validError.required
+            },
+            shop_address:{
+                required:config.validError.required
+            }
+        },
+        submitHandler:function(form) {
+            supplierUpdate.submitForm(form);
+        }
+    });
+});

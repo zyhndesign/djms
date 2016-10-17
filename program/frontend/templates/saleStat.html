@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/saleStat.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    {% include 'statSubMenu.html' %}
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">原材料库存</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <div class="row tableSearchContainer">
+                    <div class="col-md-3" style="padding-left: 0px">
+                        <div class="input-group">
+                            <div class="input-group-addon">开始日期</div>
+                            <input type="date" id="startDate" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-addon">结束日期</div>
+                            <input type="date" id="endDate" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                    </div>
+                </div>
+                <h3 class="text-primary">当前查询日期：<span id="currentStartDate">1970-01-01</span>至
+                    <span id="currentEndDate">2014-12-05</span></h3>
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>分类名称</th>
+                        <th>销售量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><span class="detailController glyphicon glyphicon-plus"></span></td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

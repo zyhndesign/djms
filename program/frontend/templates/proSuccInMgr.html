@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <link href="static/css/lib/jquery.toastmessage.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/proSuccInMgr.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+    {% include 'proSubMenu.html' %}
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">入库记录管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="instocks/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建入库记录
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <div class="col-md-7"  style="padding-left: 0px;">
+                        <input type="text" id="name" class="form-control" placeholder="产品名称/序列号">
+                    </div>
+                    <div class="col-md-4" >
+                        <select id="status" class="form-control">
+                            <option value="0">全部</option>
+                            <option value="1">出库</option>
+                            <option value="2">在库</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                    </div>
+                </div>
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>产品名称</th>
+                        <th>入库时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>出库</td>
+                        <td><a href="#" class="check">删除</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

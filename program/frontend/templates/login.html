@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% include 'head.html' %}
+    <style type="text/css">
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+        .container-fluid{
+            padding:0px;
+        }
+        .panel-body{
+            background: #EDF1F6;
+            padding:20px 0px 0px 0px;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $("#opt-body").css("minHeight",$("body").height());
+        });
+    </script>
+</head>
+<body>
+
+
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">登陆</h1>
+        </div>
+        <div class="panel-body" id="opt-body">
+            <div class="col-md-3 col-md-offset-4">
+                <form method="post" action="{{ url_for_security('login') }}" name="login_user_form">
+                     {{ login_user_form.hidden_tag() }}
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="请输入邮箱...">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码...">
+                    </div>
+                    <button type="submit" class="btn btn-success">登陆</button>
+                </form>
+                <div>
+                    {% if login_user_form.errors.values() %}
+                        <ul>
+                        {% for errors in login_user_form.errors.values() %}
+                            {% for error in errors %}
+                                <li><label class="error">{{ error }}</label></li>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <link href="static/css/lib/jquery.toastmessage.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/matStore.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+
+    {% include 'statSubMenu.html' %}
+
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">原材料库存</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>进货量（克）</th>
+                        <th>剩余量（克）</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

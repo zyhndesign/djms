@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <link href="static/css/lib/jquery.toastmessage.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/matInMgr.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+
+    {% include 'matSubMenu.html' %}
+
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">原材料进货管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="materialorders/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建进货记录
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <input type="text" id="name" class="form-control" placeholder="原材料名称名称">
+                        <span class="input-group-btn">
+                            <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                        </span>
+                </div>
+
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>供应商</th>
+                        <th>数量</th>
+                        <th>单位</th>
+                        <th>单价</th>
+                        <th>金额</th>
+                        <th>进货日期</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">删除</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

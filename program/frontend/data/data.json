@@ -1,0 +1,22 @@
+{
+    "data":{
+        "sEcho":1,
+        "success":true,
+        "iTotalRecords":20,
+        "iTotalDisplayRecords":20,
+        "aaData": [{
+            "product": "包",
+            "count": 20,
+            "platform": "Win 95+",
+            "version": "4",
+            "grade": "X"
+        },
+        {
+            "product": "围巾",
+            "count": 40,
+            "platform": "Win 95+",
+            "version": "5",
+            "grade": "C"
+        }]
+    }
+}

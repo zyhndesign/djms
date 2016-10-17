@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link href="static/css/lib/jquery.dataTables.css" rel="stylesheet" type="text/css">
+    <script src="static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/zWorkerMgr.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">织娘管理</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <a class="btn btn-success" href="workers/create">
+                    <span class="glyphicon glyphicon-plus"></span> 新建织娘
+                </a>
+                <div class="input-group tableSearchContainer col-md-6">
+                    <input type="text" id="name" class="form-control" placeholder="姓名">
+                    <span class="input-group-btn">
+                        <button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+                    </span>
+                </div>
+
+                <table id="myTable" class="dataTable">
+                    <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>身份证</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                        <th>是否管理人员</th>
+                        <th>管理人员</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--<tr>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td>dddddddd</td>
+                        <td><a href="#" class="check">修改</a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

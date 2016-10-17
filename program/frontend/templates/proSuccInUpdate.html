@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link type="text/css" rel="stylesheet" href="static/css/lib/jquery.toastmessage.css">
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/proSuccInUpdate.js"></script>
+</head>
+<body>
+
+{% include 'menu.html' %}
+
+<section class="right">
+    {% include 'proSubMenu.html' %}
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">新建/修改入库记录</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <form class="form-horizontal" id="myForm" action="instocks/create" method="post">
+
+                    <!--<div class="form-group">
+                        <label for="product_id" class="control-label col-md-2">产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="product_id" class="form-control" id="product_id">
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="product" class="control-label col-md-2">产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="product" class="form-control" id="product">
+                                {% for product in products  %}
+                                <option value="{{product.id}}">{{product.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" class="control-label col-md-2">数量*</label>
+                        <div class="col-md-3">
+                            <input type="number" min="1" class="form-control"  name="quantity"
+                                   id="quantity">
+                        </div>
+                        <label for="date_instock" class="control-label col-md-2">入库日期*</label>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="date_instock"
+                                   id="date_instock">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>

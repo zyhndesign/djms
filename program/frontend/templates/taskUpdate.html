@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'head.html' %}
+    <link type="text/css" rel="stylesheet" href="static/css/lib/jquery.toastmessage.css">
+    <script src="static/js/lib/jquery.form.js"></script>
+    <script src="static/js/lib/jquery.validate.min.js"></script>
+    <script src="static/js/lib/jquery.toastmessage.js"></script>
+    <script src="static/js/src/config.js"></script>
+    <script src="static/js/src/functions.js"></script>
+    <script src="static/js/src/taskUpdate.js"></script>
+</head>
+<body>
+{% include 'menu.html' %}
+<section class="right">
+    <article class="main">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1 class="panel-title">新建/修改任务</h1>
+            </div>
+            <div class="panel-body" id="opt-body">
+                <form class="form-horizontal" id="myForm" action="tasks/create_or_update" method="post">
+                    {% if task.id %}
+                    <input type="hidden" name="id" value="{{task.id}}">
+                    {% endif %}
+
+                    <div class="form-group">
+                       <!-- <label for="worker" class="control-label col-md-2">织娘*</label>
+                        <div class="col-md-3">
+                            <select name="worker" class="form-control" id="worker">
+                                <option value="1">织娘1</option>
+                            </select>
+                        </div>-->
+                        <label for="worker" class="control-label col-md-2">织娘*</label>
+                        <div class="col-md-3">
+                            <select name="worker" class="form-control" id="worker">
+                                {% for worker in workers  %}
+                                    {% if task.textile_worker_id==worker.id %}
+                                    <option selected value="{{worker.id}}">{{worker.fullname}}</option>
+                                    {% else %}
+                                    <option value="{{worker.id}}">{{worker.fullname}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <label for="date_started" class="control-label col-md-2">开始日期*</label>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" value="{{task.date_started}}" name="date_started"
+                                   id="date_started">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="product" class="control-label col-md-2">生产产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="product" class="form-control" id="product">
+                                <option value="1">产品1</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="product" class="control-label col-md-2">生产产品名称*</label>
+                        <div class="col-md-8">
+                            <select name="product" class="form-control" id="product">
+                                {% for product in products  %}
+                                    {% if task.product_id==product.id %}
+                                    <option selected value="{{product.id}}">{{product.name}}</option>
+                                    {% else %}
+                                    <option value="{{product.id}}">{{product.name}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity_expected" class="control-label col-md-2">产出数量*</label>
+                        <div class="col-md-3">
+                            <input type="number" class="form-control" value="{{task.quantity_expected}}" min="1"
+                                   name="quantity_expected" id="quantity_expected">
+                        </div>
+                        <label for="date_expected" class="control-label col-md-2">交货时间*</label>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" value="{{task.date_expected}}" name="date_expected"
+                                   id="date_expected">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="memo" class="control-label col-md-2">备注</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="memo" name="memo" rows="3">{{task.memo}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" class="btn btn-success form-control">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
+
+{% include 'loading.html' %}
+
+</body>
+</html>
